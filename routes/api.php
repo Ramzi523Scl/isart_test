@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ClientController;
 use App\Http\Controllers\Api\V1\ProductController;
@@ -30,6 +31,17 @@ Route::prefix('v1')->group(function () {
 
 	Route::get('products/{link}',   [ProductController::class, 'show']);
 	Route::apiResource('products',   ProductController::class);
+
+	Route::prefix('carts')->controller(CartController::class)->group(function () {
+		Route::get('{uuid}','show');
+		Route::delete('{uuid}', 'destroy');
+		Route::post('', 'store');
+
+		Route::post('{uuid}/products', 'addProduct');
+		Route::patch('{uuid}/products', 'updateProduct');
+		Route::delete('{uuid}/products/{product_id}', 'removeProduct');
+	});
+
 });
 
 

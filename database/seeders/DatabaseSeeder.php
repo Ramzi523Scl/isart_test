@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Cart;
+use App\Models\CartProduct;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Product;
@@ -20,9 +22,12 @@ class DatabaseSeeder extends Seeder
 			'email'    => 'test@example.com',
 			'password' => bcrypt(12345678),
 		]);
+
 		Client::factory(10)->create();
 		Category::factory(7)->create();
 		Product::factory(100)->create();
+		Cart::factory(5)->create();
+		CartProduct::factory(100)->create();
 
 
 	}

@@ -33,4 +33,13 @@ trait ModelTools
 		return $link;
 	}
 
+	public static function getUniqueUuid(): string
+	{
+		do {
+			$uuid = Str::uuid()->toString();
+		} while (self::whereUuid($uuid)->exists());
+
+		return $uuid;
+	}
+
 }
