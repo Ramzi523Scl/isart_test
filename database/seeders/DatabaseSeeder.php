@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\CartProduct;
 use App\Models\Category;
 use App\Models\Client;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
 		Product::factory(100)->create();
 		Cart::factory(5)->create();
 		CartProduct::factory(100)->create();
+		Order::factory(35)->create();
 
 
 	}

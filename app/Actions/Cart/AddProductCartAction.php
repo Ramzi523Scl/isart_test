@@ -12,12 +12,15 @@ class AddProductCartAction
 	{
 
 		$data = $request->validated();
-		unset($data['uuid']);
 
 		$cart     = Cart::whereUuid($uuid)->first();
+		$data['cart_id'] = $cart->id;
+		unset($data['uuid']);
+
+
 		$cartItem = CartProduct::whereCartId($cart->id)->whereProductId($data['product_id'])->first();
 
-		$cartItem->exists ? $this->updateProductInCart($cartItem, $data) : $this->addProductInCart($data);
+		is_null($cartItem) ? $this->addProductInCart($data) : $this->updateProductInCart($cartItem, $data);
 
 	}
 

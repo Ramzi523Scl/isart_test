@@ -18,6 +18,7 @@ class Cart extends Model
 			'client_id',
 
 		];
+
 	protected static function boot(): void
 	{
 		parent::boot();
@@ -36,22 +37,27 @@ class Cart extends Model
 		return $this->belongsTo(Client::class, 'client_id');
 	}
 
+	/**
+	 * Получить связку об одном товаре из корзины
+	 */
 	public function items(): ?HasMany
 	{
 		return $this->hasMany(CartProduct::class, 'cart_id', 'id');
 	}
 
-	// App\Models\Cart.php
-	public function products()
+	/**
+	 * Получить сумму всех товаров из корзины
+	 */
+	public function getSumProducts(): int
 	{
-		return $this->hasManyThrough(
-			Product::class,
-			CartProduct::class,
-			'cart_id',    // Foreign key on CartProduct table
-			'id',         // Foreign key on Product table
-			'id',         // Local key on Cart table
-			'product_id'  // Local key on CartProduct table
-		);
+		$this->load('items.product');
+
+		return $this->items->sum(function ($item) {
+			$quantity = (int)$item->quantity;
+			$price    = (float)($item->product->price ?? 0);
+
+			return $quantity * $price;
+		});
 	}
 
 }

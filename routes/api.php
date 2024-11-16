@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\CartController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\ClientController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,11 @@ Route::prefix('v1')->group(function () {
 		Route::post('{uuid}/products', 'addProduct');
 		Route::patch('{uuid}/products', 'updateProduct');
 		Route::delete('{uuid}/products/{product_id}', 'removeProduct');
+	});
+
+	Route::controller(OrderController::class)->group(function () {
+		Route::get('orders', 'index');
+		Route::post('orders', 'store');
 	});
 
 });

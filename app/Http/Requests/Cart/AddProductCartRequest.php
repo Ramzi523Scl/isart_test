@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Cart;
 
+use App\Rules\IsCartUuidExistRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddProductCartRequest extends FormRequest
@@ -9,7 +10,7 @@ class AddProductCartRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'uuid' => ['required', 'string', 'exists:carts,uuid'],
+			'uuid' => ['required', 'string', new IsCartUuidExistRule()],
 			'product_id' => ['required', 'integer', 'exists:products,id'],
 			'quantity' => ['required', 'integer']
 		];
